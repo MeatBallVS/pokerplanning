@@ -1,0 +1,1 @@
+export * as CardModel from './model';

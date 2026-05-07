@@ -1,0 +1,154 @@
+import { Activity, CheckCircle2, FolderKanban, Radio, UsersRound } from "lucide-react";
+import type { RoomSnapshotResponse } from "@/shared/api/planningPokerApi";
+import { isGarageDeck } from "@/shared/config/deckPresentation";
+import { DeckCard } from "@/shared/ui/DeckCard/DeckCard";
+
+interface PokerTableProps {
+  snapshot: RoomSnapshotResponse;
+}
+
+export const PokerTable = ({ snapshot }: PokerTableProps) => {
+  const activeTask = snapshot.tasks.find((task) => task.id === snapshot.room.current_task_id);
+  const onlineCount = snapshot.participants.filter((participant) => participant.is_online).length;
+  const votedCount = snapshot.participants.filter((participant) => participant.has_voted).length;
+  const estimatedCount = snapshot.tasks.filter((task) => Boolean(task.estimate_value)).length;
+
+  return (
+    <section className="rounded-[30px] border border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-5 shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.3fr)_280px]">
+        <div className="rounded-[28px] border border-[var(--color-border)] bg-[linear-gradient(180deg,#ffffff_0%,#edf4ff_100%)] p-5 shadow-inner shadow-white">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                Текущая задача
+              </div>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
+                {activeTask?.title ?? "Задача пока не выбрана"}
+              </h2>
+            </div>
+
+            <div className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+              {snapshot.active_round ? "Раунд идет" : "Готово к старту"}
+            </div>
+          </div>
+
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-500">
+            {activeTask?.description ||
+              snapshot.room.description ||
+              "Выберите активную задачу, чтобы участники могли сразу перейти к голосованию без лишних шагов."}
+          </p>
+
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            {[
+              {
+                icon: UsersRound,
+                label: "Участников",
+                value: snapshot.participants.length.toString(),
+              },
+              {
+                icon: Radio,
+                label: "Онлайн сейчас",
+                value: onlineCount.toString(),
+              },
+              {
+                icon: CheckCircle2,
+                label: "Оценено задач",
+                value: estimatedCount.toString(),
+              },
+            ].map((item) => (
+              <div className="rounded-3xl bg-white/90 p-4 shadow-sm" key={item.label}>
+                <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
+                  <item.icon className="h-4 w-4 text-indigo-600" />
+                  {item.label}
+                </div>
+                <div className="mt-3 text-2xl font-semibold text-slate-950">{item.value}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-[24px] border border-[var(--color-border)] bg-white/90 p-4 shadow-sm">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="text-sm font-semibold text-slate-900">Предпросмотр колоды</div>
+                <div className="text-sm text-slate-500">{snapshot.room.deck.name}</div>
+              </div>
+              <div className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                Отправлено голосов: {votedCount}
+              </div>
+            </div>
+
+            <div
+              className={[
+                "mt-4 grid gap-3",
+                isGarageDeck(snapshot.room.deck.code)
+                  ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
+                  : "grid-cols-2 sm:grid-cols-4",
+              ].join(" ")}
+            >
+              {snapshot.room.deck.cards
+                .slice(0, isGarageDeck(snapshot.room.deck.code) ? 10 : 8)
+                .map((card, index) => (
+                <DeckCard
+                  card={card}
+                  deckCode={snapshot.room.deck.code}
+                  key={`${card}-${index}`}
+                  selected={index === 3}
+                  size="preview"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm">
+            <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
+              <FolderKanban className="h-4 w-4 text-indigo-600" />
+              Backlog snapshot
+            </div>
+            <div className="mt-3 text-3xl font-semibold text-slate-950">{snapshot.tasks.length}</div>
+            <div className="mt-1 text-sm text-slate-500">задач в комнате</div>
+          </div>
+
+          <div className="rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm">
+            <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
+              <Activity className="h-4 w-4 text-indigo-600" />
+              Активные участники
+            </div>
+            <div className="mt-4 space-y-3">
+              {snapshot.participants.slice(0, 5).map((participant) => (
+                <div className="flex items-center justify-between gap-3" key={participant.id}>
+                  <div className="flex items-center gap-3">
+                    <span
+                      className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold text-white shadow-sm"
+                      style={{ backgroundColor: participant.avatar_color }}
+                    >
+                      {participant.name.slice(0, 1).toUpperCase()}
+                    </span>
+                    <div className="min-w-0">
+                      <div className="truncate font-medium text-slate-900">{participant.name}</div>
+                      <div className="text-xs text-slate-500">
+                        {participant.role === "owner" ? "Ведущий" : "Участник"}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className={[
+                      "rounded-full px-2.5 py-1 text-xs font-medium",
+                      participant.is_online
+                        ? "bg-emerald-50 text-emerald-700"
+                        : "bg-slate-100 text-slate-500",
+                    ].join(" ")}
+                  >
+                    {participant.is_online ? "Online" : "Offline"}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};

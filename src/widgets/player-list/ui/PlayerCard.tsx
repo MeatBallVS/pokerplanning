@@ -1,0 +1,88 @@
+import { Crown, ShieldCheck, UserMinus } from "lucide-react";
+import type { ParticipantResponse } from "@/shared/api/planningPokerApi";
+import { PlayerStatus } from "./PlayerStatus";
+
+interface PlayerCardProps {
+  canManage: boolean;
+  canTransferOwner?: boolean;
+  isCurrentUser: boolean;
+  isRemoving: boolean;
+  isTransferringOwner?: boolean;
+  onMakeOwner?: (participantId: string) => void;
+  onRemove?: (participantId: string) => void;
+  participant: ParticipantResponse;
+}
+
+const roleLabels = {
+  member: "Участник",
+  owner: "Ведущий",
+};
+
+export const PlayerCard = ({
+  canManage,
+  canTransferOwner = false,
+  isCurrentUser,
+  isRemoving,
+  isTransferringOwner = false,
+  onMakeOwner,
+  onRemove,
+  participant,
+}: PlayerCardProps) => {
+  return (
+    <div className="rounded-[24px] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span
+            className="flex h-11 w-11 items-center justify-center rounded-full text-sm font-semibold text-white shadow-sm"
+            style={{ backgroundColor: participant.avatar_color }}
+          >
+            {participant.name.slice(0, 1).toUpperCase()}
+          </span>
+
+          <div>
+            <div className="font-medium text-slate-900">
+              {participant.name}
+              {isCurrentUser ? " (вы)" : ""}
+            </div>
+            <div className="mt-1 flex items-center gap-2">
+              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide text-slate-600">
+                {roleLabels[participant.role]}
+              </span>
+              {participant.role === "owner" && <Crown className="h-4 w-4 text-amber-500" />}
+            </div>
+          </div>
+        </div>
+
+        <PlayerStatus isOnline={participant.is_online} voted={participant.has_voted} />
+      </div>
+
+      {(canManage && participant.role !== "owner" && onRemove) || (canTransferOwner && participant.role !== "owner" && onMakeOwner) ? (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {canTransferOwner && onMakeOwner && (
+            <button
+              className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm font-medium text-indigo-700 transition hover:bg-indigo-100 disabled:opacity-50"
+              disabled={isTransferringOwner}
+              onClick={() => onMakeOwner(participant.id)}
+              type="button"
+            >
+              <ShieldCheck className="h-4 w-4" />
+              {isTransferringOwner ? "Передаем..." : "Назначить ведущим"}
+            </button>
+          )}
+
+          {canManage && onRemove && (
+            <button
+              className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100 disabled:opacity-50"
+              disabled={isRemoving}
+              onClick={() => onRemove(participant.id)}
+              type="button"
+            >
+              <UserMinus className="h-4 w-4" />
+              {isRemoving ? "Удаляем..." : "Удалить"}
+            </button>
+          )}
+        </div>
+      ) : null}
+    </div>
+  );
+};

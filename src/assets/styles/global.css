@@ -1,0 +1,141 @@
+@import "./reset.css";
+@import "./variables.css";
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter/Inter-Regular.woff2") format("woff2");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter/Inter-Bold.woff2") format("woff2");
+  font-weight: 700;
+}
+
+html {
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 26%),
+    linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-muted) 100%);
+  color: var(--color-text);
+  min-height: 100vh;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.18);
+}
+
+.bg-white,
+.bg-slate-50,
+.bg-red-50,
+.bg-emerald-50,
+input,
+textarea,
+select {
+  color: var(--color-text);
+}
+
+.border-slate-200,
+.border-slate-300 {
+  border-color: var(--color-border);
+}
+
+.bg-slate-50 {
+  background-color: var(--color-surface-muted);
+}
+
+.bg-white {
+  background-color: var(--color-surface);
+}
+
+.text-slate-950,
+.text-slate-900,
+.text-slate-800,
+.text-slate-700 {
+  color: var(--color-text);
+}
+
+.text-slate-600,
+.text-slate-500 {
+  color: var(--color-text-muted);
+}
+
+.text-indigo-600,
+.hover\:text-indigo-600:hover {
+  color: var(--color-primary-strong);
+}
+
+.text-red-600,
+.text-red-700 {
+  color: var(--color-danger);
+}
+
+input,
+textarea,
+select {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.surface-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+}
+
+.elevated-card {
+  background-color: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+}
+
+.soft-divider {
+  border-color: var(--color-border);
+}
+
+.app-toast {
+  border-radius: 18px !important;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  box-shadow: var(--shadow-soft) !important;
+}

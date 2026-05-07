@@ -1,0 +1,1 @@
+export * as RoomModel from './model';
