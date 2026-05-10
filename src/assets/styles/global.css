@@ -24,12 +24,44 @@ html[data-theme="dark"] {
 
 body {
   margin: 0;
-  font-family: "Inter", sans-serif;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 26%),
-    linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-muted) 100%);
-  color: var(--color-text);
   min-height: 100vh;
+  overflow-x: hidden;
+  font-family: "Inter", sans-serif;
+  color: var(--color-text);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0) 24%),
+    linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-muted) 100%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+:where(h1, h2, h3, h4, h5, h6, p, a, button, label, li, figcaption) {
+  overflow-wrap: anywhere;
+}
+
+.break-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 a,
@@ -63,6 +95,7 @@ a:focus-visible {
 .bg-slate-50,
 .bg-red-50,
 .bg-emerald-50,
+.bg-indigo-50,
 input,
 textarea,
 select {
@@ -80,6 +113,10 @@ select {
 
 .bg-white {
   background-color: var(--color-surface);
+}
+
+.bg-indigo-50 {
+  background-color: color-mix(in srgb, var(--color-primary) 12%, white);
 }
 
 .text-slate-950,
@@ -107,8 +144,8 @@ select {
 input,
 textarea,
 select {
-  background-color: var(--color-surface);
   border-color: var(--color-border);
+  background-color: var(--color-surface);
 }
 
 input::placeholder,
@@ -117,15 +154,27 @@ textarea::placeholder {
 }
 
 .surface-card {
-  background-color: var(--color-surface);
   border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
   box-shadow: var(--shadow-soft);
 }
 
 .elevated-card {
-  background-color: var(--color-surface-elevated);
   border: 1px solid var(--color-border);
+  background-color: var(--color-surface-elevated);
   box-shadow: var(--shadow-card);
+}
+
+.page-shell {
+  margin-inline: auto;
+  width: min(100%, 1440px);
+  padding: 1.5rem 1.25rem 2.5rem;
+}
+
+.panel-soft {
+  border: 1px solid var(--color-border);
+  background-color: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  box-shadow: var(--shadow-soft);
 }
 
 .soft-divider {
@@ -133,8 +182,8 @@ textarea::placeholder {
 }
 
 .app-toast {
-  border-radius: 18px !important;
   border: 1px solid var(--color-border) !important;
+  border-radius: 18px !important;
   background: var(--color-surface) !important;
   color: var(--color-text) !important;
   box-shadow: var(--shadow-soft) !important;

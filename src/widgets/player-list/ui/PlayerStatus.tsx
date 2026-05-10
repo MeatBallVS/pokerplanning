@@ -5,7 +5,7 @@ interface PlayerStatusProps {
 
 export const PlayerStatus = ({ isOnline, voted }: PlayerStatusProps) => {
   return (
-    <div className="text-right text-xs">
+    <div className="text-left text-xs sm:text-right">
       <div
         className={[
           "inline-flex rounded-full px-2.5 py-1 font-medium",

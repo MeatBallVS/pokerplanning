@@ -160,16 +160,16 @@ export const ProfilePage = () => {
               {initials}
             </span>
 
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight text-slate-950">
+            <div className="min-w-0">
+              <h1 className="break-words text-2xl font-semibold tracking-tight text-slate-950">
                 {userQuery.data.name}
               </h1>
-              <div className="mt-2 flex items-center gap-2 text-sm text-slate-500">
-                <Mail className="h-4 w-4 text-indigo-600" />
+              <div className="mt-2 flex items-center gap-2 break-anywhere text-sm text-slate-500">
+                <Mail className="h-4 w-4 shrink-0 text-indigo-600" />
                 {userQuery.data.email}
               </div>
               <div className="mt-2 flex items-center gap-2 text-sm text-slate-500">
-                <BadgeCheck className="h-4 w-4 text-emerald-600" />
+                <BadgeCheck className="h-4 w-4 shrink-0 text-emerald-600" />
                 Аккаунт создан {formatDate(userQuery.data.created_at)}
               </div>
             </div>
@@ -192,7 +192,7 @@ export const ProfilePage = () => {
         </section>
 
         <section className="rounded-[30px] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-slate-950">Workspace summary</h2>
+          <h2 className="text-lg font-semibold text-slate-950">Сводка по workspace</h2>
           <div className="mt-4 grid gap-3">
             {[
               { label: "Всего комнат", value: stats.all.toString() },
@@ -205,7 +205,7 @@ export const ProfilePage = () => {
               >
                 <div className="text-sm text-slate-500">{item.label}</div>
                 <div className="mt-2 text-2xl font-semibold text-slate-950">
-                  {roomsQuery.isLoading ? "—" : item.value}
+                  {roomsQuery.isLoading ? "-" : item.value}
                 </div>
               </div>
             ))}
@@ -217,11 +217,11 @@ export const ProfilePage = () => {
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-700">
               <ShieldCheck className="h-5 w-5" />
             </div>
-            <div>
+            <div className="min-w-0">
               <h2 className="text-lg font-semibold text-slate-950">Безопасность аккаунта</h2>
               <p className="mt-1 text-sm leading-6 text-slate-500">
-                Обновляйте пароль только при необходимости и используйте уникальную комбинацию
-                длиной от 8 символов.
+                Обновляйте пароль только при необходимости и используйте уникальную
+                комбинацию длиной от 8 символов.
               </p>
             </div>
           </div>
@@ -232,17 +232,17 @@ export const ProfilePage = () => {
         className="space-y-6 rounded-[30px] border border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-6 shadow-[0_26px_70px_rgba(15,23,42,0.08)]"
         onSubmit={handleSubmit}
       >
-        <div>
+        <div className="min-w-0">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm">
             <UserRound className="h-4 w-4 text-indigo-600" />
-            Account settings
+            Настройки аккаунта
           </div>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950">
             Профиль пользователя
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-            Здесь можно обновить имя, email и задать новый пароль. Изменения сразу отражаются
-            в header и внутри комнат.
+            Здесь можно обновить имя, email и задать новый пароль. Изменения сразу
+            отражаются в header и внутри комнат.
           </p>
         </div>
 
@@ -295,7 +295,7 @@ export const ProfilePage = () => {
         )}
 
         <div className="flex flex-col gap-3 border-t border-[var(--color-border)] pt-5 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+          <div className="min-w-0">
             <div className="text-sm font-medium text-slate-700">Изменения применяются сразу</div>
             <div className="mt-1 text-sm text-slate-500">
               Данные используются в списках участников, invite-flow и навигации.

@@ -1,0 +1,38 @@
+from datetime import UTC, datetime, timedelta
+from typing import Any
+
+import jwt
+from pwdlib import PasswordHash
+
+from app.core.config import get_settings
+
+password_hash = PasswordHash.recommended()
+
+
+def hash_password(password: str) -> str:
+    return password_hash.hash(password)
+
+
+def verify_password(password: str, password_hash_value: str) -> bool:
+    return password_hash.verify(password, password_hash_value)
+
+
+def create_access_token(subject: str, additional_claims: dict[str, Any] | None = None) -> str:
+    settings = get_settings()
+    now = datetime.now(UTC)
+    expires_at = now + timedelta(minutes=settings.access_token_expire_minutes)
+
+    payload: dict[str, Any] = {
+        "sub": subject,
+        "iat": int(now.timestamp()),
+        "exp": int(expires_at.timestamp()),
+    }
+    if additional_claims:
+        payload.update(additional_claims)
+
+    return jwt.encode(payload, settings.jwt_secret_key, algorithm=settings.jwt_algorithm)
+
+
+def decode_access_token(token: str) -> dict[str, Any]:
+    settings = get_settings()
+    return jwt.decode(token, settings.jwt_secret_key, algorithms=[settings.jwt_algorithm])

@@ -30,8 +30,8 @@ export const PlayerCard = ({
 }: PlayerCardProps) => {
   return (
     <div className="rounded-[24px] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex min-w-0 items-center gap-3">
           <span
             className="flex h-11 w-11 items-center justify-center rounded-full text-sm font-semibold text-white shadow-sm"
             style={{ backgroundColor: participant.avatar_color }}
@@ -39,8 +39,8 @@ export const PlayerCard = ({
             {participant.name.slice(0, 1).toUpperCase()}
           </span>
 
-          <div>
-            <div className="font-medium text-slate-900">
+          <div className="min-w-0">
+            <div className="truncate font-medium text-slate-900">
               {participant.name}
               {isCurrentUser ? " (вы)" : ""}
             </div>
@@ -53,10 +53,13 @@ export const PlayerCard = ({
           </div>
         </div>
 
-        <PlayerStatus isOnline={participant.is_online} voted={participant.has_voted} />
+        <div className="sm:shrink-0">
+          <PlayerStatus isOnline={participant.is_online} voted={participant.has_voted} />
+        </div>
       </div>
 
-      {(canManage && participant.role !== "owner" && onRemove) || (canTransferOwner && participant.role !== "owner" && onMakeOwner) ? (
+      {(canManage && participant.role !== "owner" && onRemove) ||
+      (canTransferOwner && participant.role !== "owner" && onMakeOwner) ? (
         <div className="mt-4 flex flex-wrap gap-2">
           {canTransferOwner && onMakeOwner && (
             <button

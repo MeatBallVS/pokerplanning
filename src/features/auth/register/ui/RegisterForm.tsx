@@ -26,16 +26,17 @@ export const RegisterForm = () => {
 
   return (
     <form
-      className="w-full max-w-md space-y-5 rounded-[28px] border border-slate-200 bg-white/90 p-7 shadow-[0_32px_80px_rgba(15,23,42,0.12)] backdrop-blur"
+      className="w-full max-w-md space-y-5 rounded-[32px] border border-slate-200 bg-white/92 p-7 shadow-[0_32px_80px_rgba(15,23,42,0.12)] backdrop-blur"
       onSubmit={handleRegister}
     >
       <div className="space-y-2 text-center">
         <div className="text-sm font-medium uppercase tracking-[0.18em] text-indigo-600">
-          Team workspace
+          Пространство команды
         </div>
         <h1 className="text-3xl font-semibold tracking-tight text-slate-950">Регистрация</h1>
         <p className="mx-auto max-w-xs text-sm leading-6 text-slate-500">
-          Создайте пользователя и сразу перейдите к управлению комнатами.
+          Создайте пользователя и сразу переходите к комнатам, задачам и приглашениям
+          команды.
         </p>
       </div>
 
@@ -78,7 +79,15 @@ export const RegisterForm = () => {
         {loading ? "Создаем..." : "Зарегистрироваться"}
       </button>
 
-      <Link className="block text-center text-sm font-medium text-indigo-600 transition hover:text-indigo-500" to="/login">
+      <div className="rounded-2xl bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-500">
+        После регистрации вы сразу попадете в рабочую зону и сможете создать первую
+        комнату.
+      </div>
+
+      <Link
+        className="block text-center text-sm font-medium text-indigo-600 transition hover:text-indigo-500"
+        to="/login"
+      >
         Уже есть аккаунт
       </Link>
     </form>

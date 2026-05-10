@@ -86,7 +86,7 @@ export const CreateRoomButton = ({
           >
             <motion.div
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              className="w-full max-w-xl rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[0_32px_90px_rgba(15,23,42,0.22)]"
+              className="max-h-[calc(100vh-4rem)] w-full max-w-2xl overflow-y-auto rounded-[30px] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[0_32px_90px_rgba(15,23,42,0.22)]"
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
               initial={{ opacity: 0, scale: 0.96, y: 10 }}
               onClick={(event) => event.stopPropagation()}
@@ -95,14 +95,14 @@ export const CreateRoomButton = ({
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <div className="text-sm font-medium uppercase tracking-[0.18em] text-indigo-600">
-                    New room
+                    Новая комната
                   </div>
                   <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
                     Создайте новую сессию оценки
                   </h2>
                   <p className="mt-2 max-w-md text-sm leading-6 text-slate-500">
-                    Настройте название, описание и колоду сразу, чтобы комната была готова к
-                    работе без лишних шагов.
+                    Настройте название, описание и колоду сразу, чтобы комната была готова
+                    к работе без лишних шагов.
                   </p>
                 </div>
 
@@ -160,7 +160,7 @@ export const CreateRoomButton = ({
                       return (
                         <button
                           className={[
-                            "rounded-3xl border p-4 text-left transition",
+                            "min-w-0 rounded-3xl border p-4 text-left transition",
                             active
                               ? "border-indigo-500 bg-indigo-50 text-indigo-900 shadow-sm"
                               : "border-slate-200 bg-slate-50/80 text-slate-700 hover:border-indigo-200 hover:bg-white",
@@ -172,14 +172,16 @@ export const CreateRoomButton = ({
                           type="button"
                         >
                           <div className="flex items-center justify-between gap-3">
-                            <div className="font-medium">{deck.name}</div>
+                            <div className="min-w-0 break-words font-medium">{deck.name}</div>
                             {active && (
                               <span className="rounded-full bg-indigo-600 px-2.5 py-1 text-xs font-medium text-white">
                                 Выбрано
                               </span>
                             )}
                           </div>
-                          <p className="mt-2 text-sm text-slate-500">{deck.description}</p>
+                          <p className="mt-2 break-words text-sm leading-6 text-slate-500">
+                            {deck.description}
+                          </p>
                           <div
                             className={[
                               "mt-3 gap-2",

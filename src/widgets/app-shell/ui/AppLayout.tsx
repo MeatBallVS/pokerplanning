@@ -9,7 +9,7 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
   return (
     <div className="min-h-screen bg-[var(--color-bg)]">
       <AppHeader />
-      <main className="mx-auto max-w-7xl px-0 pb-10">{children}</main>
+      <main className="mx-auto max-w-[1440px] px-0 pb-12">{children}</main>
     </div>
   );
 };

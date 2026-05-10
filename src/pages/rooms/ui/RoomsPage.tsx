@@ -90,18 +90,15 @@ export const RoomsPage = ({ scope }: RoomsPageProps) => {
     return rooms;
   }, [roomsQuery.data, scope]);
 
-  const stats = useMemo(
-    () => {
-      const rooms = roomsQuery.data ?? [];
+  const stats = useMemo(() => {
+    const rooms = roomsQuery.data ?? [];
 
-      return {
-        all: rooms.length,
-        owned: rooms.filter((room) => room.viewer_role === "owner").length,
-        participating: rooms.filter((room) => room.viewer_role === "member").length,
-      };
-    },
-    [roomsQuery.data],
-  );
+    return {
+      all: rooms.length,
+      owned: rooms.filter((room) => room.viewer_role === "owner").length,
+      participating: rooms.filter((room) => room.viewer_role === "member").length,
+    };
+  }, [roomsQuery.data]);
 
   const handleDeleteRoom = async (room: RoomListItemResponse) => {
     const confirmed = window.confirm(`Удалить комнату "${room.name}"? Это действие необратимо.`);
@@ -128,21 +125,23 @@ export const RoomsPage = ({ scope }: RoomsPageProps) => {
 
   return (
     <div className="space-y-6 px-5 py-6 sm:px-6 lg:px-8">
-      <section className="grid gap-6 overflow-hidden rounded-[34px] border border-[var(--color-border)] bg-[color:var(--color-surface-elevated)] p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] lg:grid-cols-[minmax(0,1fr)_460px] lg:p-8">
-        <div className="flex flex-col justify-between">
-          <div>
+      <section className="grid gap-6 overflow-hidden rounded-[34px] border border-[var(--color-border)] bg-[color:var(--color-surface-elevated)] p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] 2xl:grid-cols-[minmax(0,1fr)_420px] xl:p-8">
+        <div className="flex min-w-0 flex-col justify-between">
+          <div className="min-w-0">
             <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm font-medium text-slate-600 shadow-sm">
               <Sparkles className="h-4 w-4 text-indigo-600" />
-              Realtime planning for agile teams
+              Живые комнаты, задачи и оценки
             </div>
 
-            <h1 className="mt-6 max-w-2xl text-balance text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
+            <h1 className="mt-5 max-w-xl text-balance text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl 2xl:text-5xl">
               {meta.title}
             </h1>
-            <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">{meta.subtitle}</p>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+              {meta.subtitle}
+            </p>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-7 flex flex-wrap items-center gap-3">
             <CreateRoomButton onCreated={() => queryClient.invalidateQueries({ queryKey: ["rooms"] })} />
             <Link
               className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-white px-5 py-3 text-sm font-medium text-slate-700 transition hover:border-indigo-200 hover:text-indigo-700"
@@ -153,7 +152,7 @@ export const RoomsPage = ({ scope }: RoomsPageProps) => {
             </Link>
           </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+          <div className="mt-7 grid gap-3 sm:grid-cols-3">
             {[
               { label: "Всего комнат", value: stats.all.toString() },
               { label: "Ведете сами", value: stats.owned.toString() },
@@ -165,45 +164,47 @@ export const RoomsPage = ({ scope }: RoomsPageProps) => {
               >
                 <div className="text-sm text-slate-500">{item.label}</div>
                 <div className="mt-2 text-2xl font-semibold text-slate-950">
-                  {roomsQuery.isLoading ? "—" : item.value}
+                  {roomsQuery.isLoading ? "-" : item.value}
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="rounded-[30px] border border-[var(--color-border)] bg-[linear-gradient(180deg,#ffffff_0%,#f3f7ff_100%)] p-5 shadow-inner shadow-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-sm font-semibold text-slate-900">Preview room</div>
-              <div className="text-sm text-slate-500">Clean board, live votes, fast actions</div>
+        <div className="min-w-0 rounded-[30px] border border-[var(--color-border)] bg-[linear-gradient(180deg,#ffffff_0%,#f3f7ff_100%)] p-4 shadow-inner shadow-white sm:p-5">
+          <div className="flex min-w-0 items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-sm font-semibold text-slate-900">Пример room screen</div>
+              <div className="break-words text-sm leading-5 text-slate-500">
+                Чистая доска, живые голоса и быстрые действия
+              </div>
             </div>
-            <div className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">
+            <div className="hidden shrink-0 rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700 sm:inline-flex">
               Sprint board
             </div>
           </div>
 
-          <div className="mt-6 rounded-[26px] border border-[var(--color-border)] bg-white p-5 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
+          <div className="mt-5 min-w-0 rounded-[26px] border border-[var(--color-border)] bg-white p-4 shadow-sm sm:p-5">
+            <div className="flex min-w-0 items-start justify-between gap-3">
+              <div className="min-w-0">
                 <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                  Current issue
+                  Текущая задача
                 </div>
-                <div className="mt-2 text-lg font-semibold text-slate-950">
+                <div className="mt-2 break-words text-base font-semibold text-slate-950 sm:text-lg">
                   Improve reconnect after connection loss
                 </div>
               </div>
 
-              <div className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+              <div className="shrink-0 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700">
                 Live
               </div>
             </div>
 
-            <div className="mt-8 grid grid-cols-4 gap-3">
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {heroPreviewCards.map((card, index) => (
                 <div
                   className={[
-                    "flex h-16 items-center justify-center rounded-2xl border text-base font-semibold transition",
+                    "flex h-14 items-center justify-center rounded-2xl border text-base font-semibold transition sm:h-16",
                     index === 3
                       ? "border-indigo-600 bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
                       : "border-indigo-200 bg-white text-indigo-700",
@@ -215,17 +216,17 @@ export const RoomsPage = ({ scope }: RoomsPageProps) => {
               ))}
             </div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
               <div className="rounded-2xl bg-slate-50 p-4">
-                <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                  <UsersRound className="h-4 w-4 text-indigo-600" />
-                  6 участников в комнате
+                <div className="flex items-start gap-2 text-sm font-medium text-slate-700">
+                  <UsersRound className="mt-0.5 h-4 w-4 shrink-0 text-indigo-600" />
+                  <span className="break-words">6 участников в комнате</span>
                 </div>
               </div>
               <div className="rounded-2xl bg-slate-50 p-4">
-                <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                  <FolderKanban className="h-4 w-4 text-indigo-600" />
-                  14 задач в бэклоге
+                <div className="flex items-start gap-2 text-sm font-medium text-slate-700">
+                  <FolderKanban className="mt-0.5 h-4 w-4 shrink-0 text-indigo-600" />
+                  <span className="break-words">14 задач в бэклоге</span>
                 </div>
               </div>
             </div>
@@ -251,8 +252,8 @@ export const RoomsPage = ({ scope }: RoomsPageProps) => {
             </div>
             <h2 className="mt-4 text-xl font-semibold text-slate-950">{meta.empty}</h2>
             <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-              Создайте первую комнату, подключите команду по invite-ссылке и сразу начните
-              оценку задач.
+              Создайте первую комнату, подключите команду по invite-ссылке и сразу
+              начните оценку задач.
             </p>
             <div className="mt-6 flex justify-center">
               <CreateRoomButton onCreated={() => queryClient.invalidateQueries({ queryKey: ["rooms"] })} />
@@ -262,14 +263,14 @@ export const RoomsPage = ({ scope }: RoomsPageProps) => {
           <div className="grid gap-4">
             {filteredRooms.map((room) => (
               <article
-                className="rounded-[28px] border border-[var(--color-border)] bg-white/92 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]"
+                className="min-w-0 rounded-[28px] border border-[var(--color-border)] bg-white/92 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]"
                 key={room.id}
               >
-                <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
-                  <div className="space-y-3">
+                <div className="flex min-w-0 flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+                  <div className="min-w-0 space-y-3">
                     <div className="flex flex-wrap items-center gap-2">
                       <Link
-                        className="text-2xl font-semibold tracking-tight text-slate-950 transition hover:text-indigo-700"
+                        className="break-anywhere text-2xl font-semibold tracking-tight text-slate-950 transition hover:text-indigo-700"
                         to={`/room/${room.id}`}
                       >
                         {room.name}
@@ -279,7 +280,7 @@ export const RoomsPage = ({ scope }: RoomsPageProps) => {
                       </span>
                     </div>
 
-                    <p className="max-w-3xl text-sm leading-6 text-slate-500">
+                    <p className="max-w-3xl break-words text-sm leading-6 text-slate-500">
                       {room.description || "Описание комнаты пока не добавлено."}
                     </p>
 
@@ -295,7 +296,7 @@ export const RoomsPage = ({ scope }: RoomsPageProps) => {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2 xl:shrink-0">
                     <JoinRoomButton roomId={room.id} />
 
                     {room.invite_link && room.viewer_role === "owner" && (

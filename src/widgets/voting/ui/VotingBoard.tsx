@@ -46,12 +46,14 @@ export const VotingBoard = ({ onSnapshotChange, snapshot }: VotingBoardProps) =>
   return (
     <section className="space-y-4 rounded-[30px] border border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-5 shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
+        <div className="min-w-0">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm">
             <Vote className="h-4 w-4 text-indigo-600" />
             Доска голосования
           </div>
-          <h2 className="mt-4 text-2xl font-semibold tracking-tight text-slate-950">Голосование</h2>
+          <h2 className="mt-4 text-2xl font-semibold tracking-tight text-slate-950">
+            Голосование
+          </h2>
           <div className="mt-2 text-sm text-slate-500">Колода: {snapshot.room.deck.name}</div>
         </div>
 
@@ -63,9 +65,16 @@ export const VotingBoard = ({ onSnapshotChange, snapshot }: VotingBoardProps) =>
               : "border border-[var(--color-border)] bg-white text-slate-600",
           ].join(" ")}
         >
-          {activeRound ? roundStatusLabels[activeRound.status] ?? activeRound.status : "Раунд не начат"}
+          {activeRound
+            ? roundStatusLabels[activeRound.status] ?? activeRound.status
+            : "Раунд не начат"}
         </div>
       </div>
+
+      <p className="text-sm leading-6 text-slate-500">
+        Выберите карту, чтобы отправить свою оценку. Пока reveal не выполнен, голоса
+        команды остаются скрытыми.
+      </p>
 
       <CardSelector
         cards={snapshot.room.deck.cards}

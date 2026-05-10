@@ -14,8 +14,8 @@ export const VoteResults = ({ round }: Props) => {
   if (!round) {
     return (
       <div className="rounded-[24px] border border-dashed border-[var(--color-border-strong)] bg-slate-50 p-4 text-sm leading-6 text-slate-500">
-        Раунд еще не запущен. Нажмите «Начать раунд», чтобы активировать карты и собрать оценки
-        всей команды в одном потоке.
+        Раунд еще не запущен. Нажмите "Начать раунд", чтобы активировать карты и
+        собрать оценки всей команды в одном потоке.
       </div>
     );
   }
@@ -34,16 +34,18 @@ export const VoteResults = ({ round }: Props) => {
           },
           {
             label: "Среднее",
-            value: round.average_score !== null ? String(round.average_score) : "—",
+            value: round.average_score !== null ? String(round.average_score) : "-",
           },
           {
             label: "Результат",
             value: round.suggested_result ?? "Скрыт до reveal",
           },
         ].map((item) => (
-          <div className="rounded-2xl bg-white p-4 shadow-sm" key={item.label}>
+          <div className="min-w-0 rounded-2xl bg-white p-4 shadow-sm" key={item.label}>
             <div className="text-sm text-slate-500">{item.label}</div>
-            <div className="mt-2 text-lg font-semibold text-slate-950">{item.value}</div>
+            <div className="mt-2 break-words text-lg font-semibold text-slate-950">
+              {item.value}
+            </div>
           </div>
         ))}
       </div>

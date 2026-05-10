@@ -27,16 +27,17 @@ export const LoginForm = () => {
 
   return (
     <form
-      className="w-full max-w-md space-y-5 rounded-[28px] border border-slate-200 bg-white/90 p-7 shadow-[0_32px_80px_rgba(15,23,42,0.12)] backdrop-blur"
+      className="w-full max-w-md space-y-5 rounded-[32px] border border-slate-200 bg-white/92 p-7 shadow-[0_32px_80px_rgba(15,23,42,0.12)] backdrop-blur"
       onSubmit={handleLogin}
     >
       <div className="space-y-2 text-center">
         <div className="text-sm font-medium uppercase tracking-[0.18em] text-indigo-600">
-          Welcome back
+          С возвращением
         </div>
         <h1 className="text-3xl font-semibold tracking-tight text-slate-950">Вход</h1>
         <p className="mx-auto max-w-xs text-sm leading-6 text-slate-500">
-          Можно использовать демо-пользователя из backend seed.
+          Можно использовать демо-пользователя из backend seed или войти под своим
+          аккаунтом.
         </p>
       </div>
 
@@ -70,9 +71,17 @@ export const LoginForm = () => {
         {loading ? "Входим..." : "Войти"}
       </button>
 
-      <Link className="block text-center text-sm font-medium text-indigo-600 transition hover:text-indigo-500" to="/register">
-        Создать аккаунт
-      </Link>
+      <div className="space-y-3">
+        <div className="rounded-2xl bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-500">
+          Демо-аккаунт уже подставлен в форму, так что room flow можно проверить сразу.
+        </div>
+        <Link
+          className="block text-center text-sm font-medium text-indigo-600 transition hover:text-indigo-500"
+          to="/register"
+        >
+          Создать аккаунт
+        </Link>
+      </div>
     </form>
   );
 };

@@ -15,14 +15,14 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
 
   return (
     <section className="rounded-[30px] border border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-5 shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.3fr)_280px]">
-        <div className="rounded-[28px] border border-[var(--color-border)] bg-[linear-gradient(180deg,#ffffff_0%,#edf4ff_100%)] p-5 shadow-inner shadow-white">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.2fr)_300px]">
+        <div className="min-w-0 rounded-[28px] border border-[var(--color-border)] bg-[linear-gradient(180deg,#ffffff_0%,#edf4ff_100%)] p-5 shadow-inner shadow-white">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
+            <div className="min-w-0">
               <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                 Текущая задача
               </div>
-              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
+              <h2 className="mt-2 break-words text-2xl font-semibold tracking-tight text-slate-950">
                 {activeTask?.title ?? "Задача пока не выбрана"}
               </h2>
             </div>
@@ -32,7 +32,7 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
             </div>
           </div>
 
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-500">
+          <p className="mt-4 max-w-2xl break-words text-sm leading-6 text-slate-500">
             {activeTask?.description ||
               snapshot.room.description ||
               "Выберите активную задачу, чтобы участники могли сразу перейти к голосованию без лишних шагов."}
@@ -68,7 +68,7 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
 
           <div className="mt-8 rounded-[24px] border border-[var(--color-border)] bg-white/90 p-4 shadow-sm">
             <div className="flex items-center justify-between gap-3">
-              <div>
+              <div className="min-w-0">
                 <div className="text-sm font-semibold text-slate-900">Предпросмотр колоды</div>
                 <div className="text-sm text-slate-500">{snapshot.room.deck.name}</div>
               </div>
@@ -81,21 +81,21 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
               className={[
                 "mt-4 grid gap-3",
                 isGarageDeck(snapshot.room.deck.code)
-                  ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
+                  ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5"
                   : "grid-cols-2 sm:grid-cols-4",
               ].join(" ")}
             >
               {snapshot.room.deck.cards
                 .slice(0, isGarageDeck(snapshot.room.deck.code) ? 10 : 8)
                 .map((card, index) => (
-                <DeckCard
-                  card={card}
-                  deckCode={snapshot.room.deck.code}
-                  key={`${card}-${index}`}
-                  selected={index === 3}
-                  size="preview"
-                />
-              ))}
+                  <DeckCard
+                    card={card}
+                    deckCode={snapshot.room.deck.code}
+                    key={`${card}-${index}`}
+                    selected={index === 3}
+                    size="preview"
+                  />
+                ))}
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
           <div className="rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm">
             <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
               <FolderKanban className="h-4 w-4 text-indigo-600" />
-              Backlog snapshot
+              Срез бэклога
             </div>
             <div className="mt-3 text-3xl font-semibold text-slate-950">{snapshot.tasks.length}</div>
             <div className="mt-1 text-sm text-slate-500">задач в комнате</div>
@@ -118,7 +118,7 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
             <div className="mt-4 space-y-3">
               {snapshot.participants.slice(0, 5).map((participant) => (
                 <div className="flex items-center justify-between gap-3" key={participant.id}>
-                  <div className="flex items-center gap-3">
+                  <div className="flex min-w-0 items-center gap-3">
                     <span
                       className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold text-white shadow-sm"
                       style={{ backgroundColor: participant.avatar_color }}

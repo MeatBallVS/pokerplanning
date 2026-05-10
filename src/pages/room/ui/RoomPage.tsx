@@ -29,7 +29,7 @@ const taskStatusLabels: Record<string, string> = {
 };
 
 const socketLabels = {
-  connected: "Live",
+  connected: "В сети",
   connecting: "Подключаемся",
   disconnected: "Отключено",
   error: "Ошибка",
@@ -445,19 +445,18 @@ export const RoomPage = () => {
   return (
     <div className="space-y-6 px-5 py-6 sm:px-6 lg:px-8">
       <section className="rounded-[34px] border border-[var(--color-border)] bg-[color:var(--color-surface-elevated)] p-6 shadow-[0_26px_70px_rgba(15,23,42,0.08)] lg:p-8">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div className="space-y-4">
+        <div className="flex min-w-0 flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+          <div className="min-w-0 space-y-4">
             <Link
               className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-slate-950"
               to="/rooms"
             >
-              <ArrowLeft className="h-4 w-4" />
-              К списку комнат
+              <ArrowLeft className="h-4 w-4" />К списку комнат
             </Link>
 
-            <div>
+            <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-4xl font-semibold tracking-tight text-slate-950">
+                <h1 className="break-anywhere text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
                   {snapshot.room.name}
                 </h1>
                 <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium uppercase tracking-wide text-slate-600">
@@ -478,7 +477,7 @@ export const RoomPage = () => {
                 </span>
               </div>
 
-              <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
+              <p className="mt-4 max-w-3xl break-words text-base leading-7 text-slate-600">
                 {snapshot.room.description || "Описание комнаты пока не добавлено."}
               </p>
             </div>
@@ -496,7 +495,7 @@ export const RoomPage = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 xl:max-w-[420px] xl:justify-end">
             {snapshot.room.invite_link && (
               <button
                 className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:border-indigo-200 hover:text-indigo-700"
@@ -548,7 +547,7 @@ export const RoomPage = () => {
         )}
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)_360px]">
+      <div className="grid gap-6 xl:grid-cols-[minmax(280px,320px)_minmax(0,1fr)_minmax(300px,360px)]">
         <div className="space-y-6">
           <PlayerList
             canManage={isOwner}
@@ -579,8 +578,8 @@ export const RoomPage = () => {
                     key={item.id}
                   >
                     <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <div className="font-medium text-slate-900">{item.task_title}</div>
+                      <div className="min-w-0">
+                        <div className="break-words font-medium text-slate-900">{item.task_title}</div>
                         <div className="mt-1 text-sm text-slate-500">{formatDate(item.created_at)}</div>
                       </div>
                       <div className="rounded-xl bg-white px-3 py-2 text-sm font-semibold text-indigo-700">
@@ -602,11 +601,11 @@ export const RoomPage = () => {
           <PokerTable snapshot={snapshot} />
 
           <section className="rounded-[30px] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-sm">
-            <div>
+            <div className="min-w-0">
               <h2 className="text-lg font-semibold text-slate-950">Управление задачами</h2>
               <p className="mt-1 text-sm leading-6 text-slate-500">
                 {isOwner
-                  ? "Добавляйте задачи, переключайте активную и держите room workflow в одном месте."
+                  ? "Добавляйте задачи, переключайте активную и держите весь workflow комнаты в одном месте."
                   : "Здесь виден актуальный бэклог комнаты и прогресс по задачам."}
               </p>
             </div>
@@ -675,20 +674,22 @@ export const RoomPage = () => {
                       </div>
                     ) : (
                       <div className="space-y-3">
-                        <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-                          <div>
-                            <div className="font-medium text-slate-950">{task.title}</div>
+                        <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
+                          <div className="min-w-0">
+                            <div className="break-words font-medium text-slate-950">{task.title}</div>
                             <div className="mt-1 text-sm text-slate-500">
                               {taskStatusLabels[task.status] ?? task.status}
                               {task.estimate_value ? ` | ${task.estimate_value}` : ""}
                             </div>
                             {task.description && (
-                              <p className="mt-2 text-sm leading-6 text-slate-500">{task.description}</p>
+                              <p className="mt-2 break-words text-sm leading-6 text-slate-500">
+                                {task.description}
+                              </p>
                             )}
                           </div>
 
                           {isOwner && (
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-2 xl:shrink-0">
                               {snapshot.room.current_task_id !== task.id && (
                                 <button
                                   className="rounded-full border border-[var(--color-border)] bg-white px-3 py-2 text-sm font-medium text-slate-700 disabled:opacity-60"
@@ -741,7 +742,7 @@ export const RoomPage = () => {
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-700">
                   <ShieldCheck className="h-5 w-5" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h2 className="text-lg font-semibold text-slate-950">Администрирование комнаты</h2>
                   <p className="mt-1 text-sm leading-6 text-slate-500">
                     Меняйте базовые настройки комнаты и управляйте жизненным циклом сессии.

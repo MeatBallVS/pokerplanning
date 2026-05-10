@@ -66,18 +66,20 @@ export const AppHeader = () => {
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[color:var(--color-surface-elevated)]/88 backdrop-blur-xl">
-      <div className="mx-auto max-w-7xl px-5 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1440px] px-5 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+          <div className="flex min-w-0 items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-500/20">
               <LayoutGrid className="h-5 w-5" />
             </div>
 
-            <div>
-              <div className="text-lg font-semibold tracking-tight text-slate-950">Planning Poker</div>
+            <div className="min-w-0">
+              <div className="truncate text-lg font-semibold tracking-tight text-slate-950">
+                Planning Poker
+              </div>
               <div className="flex items-center gap-2 text-sm text-slate-500">
                 <Sparkles className="h-3.5 w-3.5 text-indigo-500" />
-                Realtime estimation workspace
+                Живое пространство для командной оценки
               </div>
             </div>
           </div>
@@ -108,7 +110,7 @@ export const AppHeader = () => {
                 >
                   {initials || <UserRound className="h-4 w-4" />}
                 </span>
-                <span className="max-w-32 truncate text-sm font-medium text-slate-700">
+                <span className="max-w-[10rem] truncate text-sm font-medium text-slate-700">
                   {user?.name ?? "Профиль"}
                 </span>
               </NavLink>
@@ -128,7 +130,11 @@ export const AppHeader = () => {
               onClick={toggleTheme}
               type="button"
             >
-              {theme === "dark" ? <SunMedium className="h-4.5 w-4.5" /> : <MoonStar className="h-4.5 w-4.5" />}
+              {theme === "dark" ? (
+                <SunMedium className="h-4.5 w-4.5" />
+              ) : (
+                <MoonStar className="h-4.5 w-4.5" />
+              )}
             </button>
 
             <button
@@ -159,7 +165,9 @@ export const AppHeader = () => {
                   {initials || <UserRound className="h-4 w-4" />}
                 </span>
                 <div className="min-w-0">
-                  <div className="truncate font-medium text-slate-900">{user?.name ?? "Профиль"}</div>
+                  <div className="truncate font-medium text-slate-900">
+                    {user?.name ?? "Профиль"}
+                  </div>
                   <div className="truncate text-sm text-slate-500">
                     {user?.email ?? "Управление аккаунтом"}
                   </div>
