@@ -483,13 +483,13 @@ export const RoomPage = () => {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <div className="rounded-full border border-[var(--color-border)] bg-white px-3 py-1.5 text-sm text-slate-600">
+              <div className="room-summary-chip rounded-full border border-[var(--color-border)] bg-white px-3 py-1.5 text-sm text-slate-600">
                 Колода: {snapshot.room.deck.name}
               </div>
-              <div className="rounded-full border border-[var(--color-border)] bg-white px-3 py-1.5 text-sm text-slate-600">
+              <div className="room-summary-chip rounded-full border border-[var(--color-border)] bg-white px-3 py-1.5 text-sm text-slate-600">
                 Участников: {snapshot.participants.length}
               </div>
-              <div className="rounded-full border border-[var(--color-border)] bg-white px-3 py-1.5 text-sm text-slate-600">
+              <div className="room-summary-chip rounded-full border border-[var(--color-border)] bg-white px-3 py-1.5 text-sm text-slate-600">
                 История оценок: {snapshot.history.length}
               </div>
             </div>

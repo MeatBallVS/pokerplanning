@@ -379,6 +379,14 @@ textarea::placeholder {
   color: var(--color-text);
 }
 
+.room-dashboard .room-summary-chip {
+  display: inline-flex;
+  align-items: center;
+  min-width: 10rem;
+  padding-inline: 1.25rem;
+  white-space: nowrap;
+}
+
 .room-dashboard .vote-results-panel {
   display: flex;
   flex-direction: column;
