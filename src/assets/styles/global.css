@@ -382,7 +382,7 @@ textarea::placeholder {
 .room-dashboard .room-summary-chip {
   display: inline-flex;
   align-items: center;
-  min-width: 10rem;
+  min-width: 9rem;
   padding-inline: 1.25rem;
   white-space: nowrap;
 }
