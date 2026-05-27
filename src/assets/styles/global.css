@@ -371,6 +371,60 @@ textarea::placeholder {
   justify-self: end;
 }
 
+.room-dashboard {
+  color: var(--color-text);
+}
+
+.room-dashboard :where(section, article)[class*="border"] {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    rgba(255, 255, 255, 0.052);
+  background-size:
+    88px 88px,
+    88px 88px,
+    auto;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+}
+
+.room-dashboard :where(.bg-white, .bg-slate-50, .bg-white\/90, .bg-slate-100) {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.room-dashboard :where(.text-slate-950, .text-slate-900, .text-slate-800, .text-slate-700) {
+  color: var(--color-text);
+}
+
+.room-dashboard :where(.text-slate-600, .text-slate-500, .text-slate-400) {
+  color: var(--color-text-soft);
+}
+
+.room-dashboard :where(input, textarea, select) {
+  border-color: var(--color-border);
+  background-color: rgba(0, 0, 0, 0.22);
+  color: var(--color-text);
+}
+
+.room-dashboard :where(input, textarea)::placeholder {
+  color: var(--color-text-muted);
+}
+
+.room-dashboard :where(.border-slate-200, .border-amber-200) {
+  border-color: var(--color-border);
+}
+
+.room-dashboard :where(.bg-amber-50) {
+  background-color: rgba(246, 197, 83, 0.12);
+}
+
+.room-dashboard :where(.text-amber-700) {
+  color: #f6c553;
+}
+
+.room-dashboard :where(.shadow-white) {
+  --tw-shadow-color: rgba(0, 0, 0, 0.24);
+}
+
 @media (min-width: 1180px) {
   .auth-shell-frame {
     grid-template-columns: minmax(0, 1fr) minmax(360px, 430px);

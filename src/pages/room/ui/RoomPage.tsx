@@ -443,7 +443,7 @@ export const RoomPage = () => {
   const garageDeck = isGarageDeck(snapshot.room.deck.code);
 
   return (
-    <div className="space-y-6 px-5 py-6 sm:px-6 lg:px-8">
+    <div className="room-dashboard space-y-6 px-5 py-6 sm:px-6 lg:px-8">
       <section className="rounded-[34px] border border-[var(--color-border)] bg-[color:var(--color-surface-elevated)] p-6 shadow-[0_26px_70px_rgba(15,23,42,0.08)] lg:p-8">
         <div className="flex min-w-0 flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
           <div className="min-w-0 space-y-4">

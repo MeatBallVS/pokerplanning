@@ -27,8 +27,8 @@ const garageSizeClasses: Record<DeckCardSize, string> = {
 
 const defaultValueClasses: Record<DeckCardSize, string> = {
   compact: "text-base",
-  preview: "text-2xl",
-  selector: "text-3xl",
+  preview: "text-xl",
+  selector: "text-2xl",
 };
 
 const buildAriaLabel = (value: string, title?: string, eyebrow?: string) =>
@@ -116,28 +116,41 @@ export const DeckCard = ({
   }
 
   const defaultClassName = classNames(
-    "flex h-full w-full flex-col justify-between border bg-white text-left text-slate-950 transition",
+    "flex h-full w-full flex-col items-center justify-center overflow-hidden border bg-white/6 text-center text-white transition",
     {
-      "border-indigo-400 bg-indigo-50 shadow-[0_18px_45px_rgba(79,70,229,0.18)]": selected,
+      "border-[var(--color-primary)] bg-[var(--color-primary)]/15 shadow-[0_18px_45px_rgba(216,255,115,0.16)] ring-1 ring-[var(--color-primary)]/70":
+        selected,
       "cursor-not-allowed opacity-55": disabled,
-      "cursor-pointer hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-slate-50":
+      "cursor-pointer hover:-translate-y-0.5 hover:border-[var(--color-primary)]/50 hover:bg-white/10":
         interactive && !disabled,
     },
     [defaultSizeClasses[size], selected ? "" : "border-slate-200 shadow-sm"],
   );
 
-  const defaultContent = (
-    <>
+  const defaultContent =
+    size === "preview" ? (
+      <div className="flex h-full w-full min-w-0 items-center justify-center rounded-[18px] border border-white/10 bg-black/18 px-2 py-2 shadow-inner shadow-black/25">
+        <span
+          className={classNames(
+            "block max-w-full truncate font-semibold leading-none tracking-normal text-white",
+            {},
+            [defaultValueClasses[size]],
+          )}
+        >
+          {presentation.displayValue}
+        </span>
+      </div>
+    ) : (
+      <div className="flex h-full w-full min-w-0 flex-col items-center justify-center overflow-hidden rounded-[20px] border border-white/10 bg-black/18 px-3 py-4 text-center shadow-inner shadow-black/25">
       {presentation.eyebrow && (
-        <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+        <div className="line-clamp-1 max-w-full text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
           {presentation.eyebrow}
         </div>
       )}
 
-      <div className="mt-3 flex-1 rounded-[20px] bg-[linear-gradient(180deg,#eef4ff_0%,#ffffff_100%)] px-3 py-4 shadow-inner">
         <div
           className={classNames(
-            "font-semibold tracking-tight text-slate-950",
+            "mt-2 max-w-full break-words font-semibold leading-none tracking-normal text-white",
             {},
             [defaultValueClasses[size]],
           )}
@@ -145,11 +158,12 @@ export const DeckCard = ({
           {presentation.displayValue}
         </div>
         {presentation.title && (
-          <div className="mt-2 text-xs leading-5 text-slate-500">{presentation.title}</div>
+          <div className="line-clamp-2 mt-2 break-words text-xs leading-5 text-[var(--color-text-soft)]">
+            {presentation.title}
+          </div>
         )}
       </div>
-    </>
-  );
+    );
 
   if (interactive) {
     return (

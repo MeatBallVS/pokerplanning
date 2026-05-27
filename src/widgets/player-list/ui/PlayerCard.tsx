@@ -30,7 +30,7 @@ export const PlayerCard = ({
 }: PlayerCardProps) => {
   return (
     <div className="rounded-[24px] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <div className="flex flex-col gap-4">
         <div className="flex min-w-0 items-center gap-3">
           <span
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white shadow-sm"
@@ -53,7 +53,7 @@ export const PlayerCard = ({
           </div>
         </div>
 
-        <div className="sm:shrink-0">
+        <div className="shrink-0">
           <PlayerStatus isOnline={participant.is_online} voted={participant.has_voted} />
         </div>
       </div>
@@ -63,7 +63,7 @@ export const PlayerCard = ({
         <div className="mt-4 flex flex-wrap gap-2">
           {canTransferOwner && onMakeOwner && (
             <button
-              className="inline-flex max-w-full items-center justify-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3.5 py-2.5 text-sm font-medium leading-tight text-indigo-700 transition hover:bg-indigo-100 disabled:opacity-50"
+              className="inline-flex min-w-[150px] max-w-full flex-1 items-center justify-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3.5 py-2.5 text-sm font-medium leading-tight text-indigo-700 transition hover:bg-indigo-100 disabled:opacity-50"
               disabled={isTransferringOwner}
               onClick={() => onMakeOwner(participant.id)}
               type="button"
@@ -77,7 +77,7 @@ export const PlayerCard = ({
 
           {canManage && onRemove && (
             <button
-              className="inline-flex max-w-full items-center justify-center gap-2 rounded-full border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm font-medium leading-tight text-red-700 transition hover:bg-red-100 disabled:opacity-50"
+              className="inline-flex min-w-[120px] max-w-full flex-1 items-center justify-center gap-2 rounded-full border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm font-medium leading-tight text-red-700 transition hover:bg-red-100 disabled:opacity-50"
               disabled={isRemoving}
               onClick={() => onRemove(participant.id)}
               type="button"

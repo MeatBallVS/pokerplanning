@@ -16,13 +16,13 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
   return (
     <section className="rounded-[30px] border border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-5 shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.2fr)_300px]">
-        <div className="min-w-0 rounded-[28px] border border-[var(--color-border)] bg-[linear-gradient(180deg,#ffffff_0%,#edf4ff_100%)] p-5 shadow-inner shadow-white">
+        <div className="min-w-0 rounded-[28px] border border-[var(--color-border)] bg-white/5 p-5 shadow-inner shadow-black/20">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="min-w-0">
-              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
                 Текущая задача
               </div>
-              <h2 className="mt-2 break-words text-2xl font-semibold tracking-tight text-slate-950">
+              <h2 className="mt-2 break-words text-2xl font-semibold tracking-tight text-white">
                 {activeTask?.title ?? "Задача пока не выбрана"}
               </h2>
             </div>
@@ -32,7 +32,7 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
             </div>
           </div>
 
-          <p className="mt-4 max-w-2xl break-words text-sm leading-6 text-slate-500">
+          <p className="mt-4 max-w-2xl break-words text-sm leading-6 text-[var(--color-text-soft)]">
             {activeTask?.description ||
               snapshot.room.description ||
               "Выберите активную задачу, чтобы участники могли сразу перейти к голосованию без лишних шагов."}
@@ -56,21 +56,21 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
                 value: estimatedCount.toString(),
               },
             ].map((item) => (
-              <div className="rounded-3xl bg-white/90 p-4 shadow-sm" key={item.label}>
-                <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
+              <div className="rounded-3xl border border-white/10 bg-white/6 p-4 shadow-sm" key={item.label}>
+                <div className="flex items-center gap-2 text-sm font-medium text-[var(--color-text-soft)]">
                   <item.icon className="h-4 w-4 text-indigo-600" />
                   {item.label}
                 </div>
-                <div className="mt-3 text-2xl font-semibold text-slate-950">{item.value}</div>
+                <div className="mt-3 text-2xl font-semibold text-white">{item.value}</div>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 rounded-[24px] border border-[var(--color-border)] bg-white/90 p-4 shadow-sm">
+          <div className="mt-8 rounded-[24px] border border-[var(--color-border)] bg-white/6 p-4 shadow-sm">
             <div className="flex items-center justify-between gap-3">
               <div className="min-w-0">
-                <div className="text-sm font-semibold text-slate-900">Предпросмотр колоды</div>
-                <div className="text-sm text-slate-500">{snapshot.room.deck.name}</div>
+                <div className="text-sm font-semibold text-white">Предпросмотр колоды</div>
+                <div className="text-sm text-[var(--color-text-soft)]">{snapshot.room.deck.name}</div>
               </div>
               <div className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
                 Отправлено голосов: {votedCount}
@@ -101,17 +101,17 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm">
-            <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
+          <div className="rounded-[28px] border border-[var(--color-border)] bg-white/5 p-4 shadow-sm">
+            <div className="flex items-center gap-2 text-sm font-medium text-[var(--color-text-soft)]">
               <FolderKanban className="h-4 w-4 text-indigo-600" />
               Срез бэклога
             </div>
-            <div className="mt-3 text-3xl font-semibold text-slate-950">{snapshot.tasks.length}</div>
-            <div className="mt-1 text-sm text-slate-500">задач в комнате</div>
+            <div className="mt-3 text-3xl font-semibold text-white">{snapshot.tasks.length}</div>
+            <div className="mt-1 text-sm text-[var(--color-text-soft)]">задач в комнате</div>
           </div>
 
-          <div className="rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm">
-            <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
+          <div className="rounded-[28px] border border-[var(--color-border)] bg-white/5 p-4 shadow-sm">
+            <div className="flex items-center gap-2 text-sm font-medium text-[var(--color-text-soft)]">
               <Activity className="h-4 w-4 text-indigo-600" />
               Активные участники
             </div>
@@ -126,8 +126,8 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
                       {participant.name.slice(0, 1).toUpperCase()}
                     </span>
                     <div className="min-w-0">
-                      <div className="truncate font-medium text-slate-900">{participant.name}</div>
-                      <div className="text-xs text-slate-500">
+                      <div className="truncate font-medium text-white">{participant.name}</div>
+                      <div className="text-xs text-[var(--color-text-soft)]">
                         {participant.role === "owner" ? "Ведущий" : "Участник"}
                       </div>
                     </div>
