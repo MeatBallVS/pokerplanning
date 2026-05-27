@@ -17,6 +17,7 @@ export const CardSelector = ({
   selectedValue,
 }: Props) => {
   const garageDeck = isGarageDeck(deckCode);
+  const selectableCards = cards.filter((card) => card !== "?");
 
   return (
     <div
@@ -27,7 +28,7 @@ export const CardSelector = ({
           : "grid-cols-2 sm:grid-cols-3",
       ].join(" ")}
     >
-      {cards.map((card) => (
+      {selectableCards.map((card) => (
         <DeckCard
           card={card}
           deckCode={deckCode}
