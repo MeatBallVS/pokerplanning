@@ -399,6 +399,39 @@ textarea::placeholder {
   margin-top: 1.25rem;
 }
 
+.room-dashboard .poker-metrics-grid {
+  align-items: stretch;
+}
+
+.room-dashboard .poker-metric-card {
+  display: flex;
+  min-height: 6.75rem;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem 1.25rem 1rem 1.4rem;
+}
+
+.room-dashboard .poker-metric-label {
+  align-items: flex-start;
+  min-height: 2.5rem;
+  line-height: 1.25;
+}
+
+.room-dashboard .poker-metric-label span {
+  min-width: 0;
+}
+
+.room-dashboard .poker-metric-icon {
+  flex: 0 0 1rem;
+  margin-top: 0.1rem;
+}
+
+.room-dashboard .poker-metric-value {
+  padding-left: 1.55rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
 .room-dashboard :where(section, article)[class*="border"] {
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px),

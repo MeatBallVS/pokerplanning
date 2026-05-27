@@ -38,7 +38,7 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
               "Выберите активную задачу, чтобы участники могли сразу перейти к голосованию без лишних шагов."}
           </p>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+          <div className="poker-metrics-grid mt-8 grid gap-3 sm:grid-cols-3">
             {[
               {
                 icon: UsersRound,
@@ -56,12 +56,12 @@ export const PokerTable = ({ snapshot }: PokerTableProps) => {
                 value: estimatedCount.toString(),
               },
             ].map((item) => (
-              <div className="rounded-3xl border border-white/10 bg-white/6 p-4 shadow-sm" key={item.label}>
-                <div className="flex items-center gap-2 text-sm font-medium text-[var(--color-text-soft)]">
-                  <item.icon className="h-4 w-4 text-indigo-600" />
-                  {item.label}
+              <div className="poker-metric-card rounded-3xl border border-white/10 bg-white/6 p-4 shadow-sm" key={item.label}>
+                <div className="poker-metric-label flex items-center gap-2 text-sm font-medium text-[var(--color-text-soft)]">
+                  <item.icon className="poker-metric-icon h-4 w-4 text-indigo-600" />
+                  <span>{item.label}</span>
                 </div>
-                <div className="mt-3 text-2xl font-semibold text-white">{item.value}</div>
+                <div className="poker-metric-value mt-3 text-2xl font-semibold text-white">{item.value}</div>
               </div>
             ))}
           </div>
