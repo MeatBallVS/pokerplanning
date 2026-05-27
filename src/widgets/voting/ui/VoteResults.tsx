@@ -21,8 +21,8 @@ export const VoteResults = ({ round }: Props) => {
   }
 
   return (
-    <div className="space-y-4 rounded-[24px] bg-slate-50 p-4">
-      <div className="grid gap-3 sm:grid-cols-2">
+    <div className="space-y-5 rounded-[24px] bg-slate-50 p-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         {[
           {
             label: "Голоса",
@@ -53,7 +53,7 @@ export const VoteResults = ({ round }: Props) => {
       {!!Object.keys(round.distribution).length && (
         <div className="rounded-2xl border border-[var(--color-border)] bg-white p-4">
           <div className="text-sm font-medium text-slate-700">Распределение голосов</div>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-4 flex flex-wrap gap-3">
             {Object.entries(round.distribution).map(([value, count]) => (
               <span
                 className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-700"

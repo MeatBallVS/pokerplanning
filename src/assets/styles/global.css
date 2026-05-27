@@ -353,6 +353,10 @@ textarea::placeholder {
   overflow-wrap: anywhere;
 }
 
+.participant-status-offset {
+  padding-left: 3.5rem;
+}
+
 .auth-shell-frame {
   grid-template-columns: minmax(0, 1fr);
 }

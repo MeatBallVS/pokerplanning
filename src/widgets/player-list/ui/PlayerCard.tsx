@@ -53,7 +53,7 @@ export const PlayerCard = ({
           </div>
         </div>
 
-        <div className="shrink-0">
+        <div className="participant-status-offset shrink-0">
           <PlayerStatus isOnline={participant.is_online} voted={participant.has_voted} />
         </div>
       </div>

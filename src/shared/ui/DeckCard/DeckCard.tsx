@@ -14,9 +14,15 @@ interface DeckCardProps {
 }
 
 const defaultSizeClasses: Record<DeckCardSize, string> = {
-  compact: "aspect-[3/4] rounded-[22px] p-3",
-  preview: "aspect-[3/4] rounded-[24px] p-3.5",
-  selector: "aspect-[3/4] rounded-[26px] p-4",
+  compact: "aspect-square rounded-[20px] p-2.5",
+  preview: "aspect-square rounded-[22px] p-2.5",
+  selector: "aspect-square rounded-[24px] p-3",
+};
+
+const wideDefaultSizeClasses: Record<DeckCardSize, string> = {
+  compact: "col-span-2 aspect-[4/1] rounded-[20px] p-2",
+  preview: "col-span-2 aspect-[4/1] rounded-[22px] p-2",
+  selector: "col-span-2 aspect-[4.2/1] rounded-[24px] p-2 sm:col-span-3",
 };
 
 const garageSizeClasses: Record<DeckCardSize, string> = {
@@ -46,6 +52,7 @@ export const DeckCard = ({
 }: DeckCardProps) => {
   const presentation = getDeckCardPresentation(deckCode, card);
   const interactive = Boolean(onSelect);
+  const wideDefaultCard = presentation.displayValue.length > 3 || Boolean(presentation.title);
   const ariaLabel = buildAriaLabel(
     presentation.displayValue,
     presentation.title,
@@ -124,24 +131,34 @@ export const DeckCard = ({
       "cursor-pointer hover:-translate-y-0.5 hover:border-[var(--color-primary)]/50 hover:bg-white/10":
         interactive && !disabled,
     },
-    [defaultSizeClasses[size], selected ? "" : "border-slate-200 shadow-sm"],
+    [wideDefaultCard ? wideDefaultSizeClasses[size] : defaultSizeClasses[size], selected ? "" : "border-slate-200 shadow-sm"],
   );
 
   const defaultContent =
-    size === "preview" ? (
-      <div className="flex h-full w-full min-w-0 items-center justify-center rounded-[18px] border border-white/10 bg-black/18 px-2 py-2 shadow-inner shadow-black/25">
+    size === "preview" || wideDefaultCard ? (
+      <div className="flex h-full w-full min-w-0 flex-col items-center justify-center overflow-hidden rounded-[18px] border border-white/10 bg-black/18 px-2 py-1 text-center shadow-inner shadow-black/25">
+        {wideDefaultCard && presentation.eyebrow && size !== "preview" && (
+          <span className="block max-w-full truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
+            {presentation.eyebrow}
+          </span>
+        )}
         <span
           className={classNames(
-            "block max-w-full truncate font-semibold leading-none tracking-normal text-white",
+            "mt-0.5 block max-w-full whitespace-nowrap text-center font-semibold leading-none tracking-normal text-white",
             {},
-            [defaultValueClasses[size]],
+            [wideDefaultCard && size !== "compact" ? "text-lg" : defaultValueClasses[size]],
           )}
         >
           {presentation.displayValue}
         </span>
+        {wideDefaultCard && presentation.title && size !== "preview" && (
+          <span className="mt-1 block max-w-full truncate text-center text-xs leading-4 text-[var(--color-text-soft)]">
+            {presentation.title}
+          </span>
+        )}
       </div>
     ) : (
-      <div className="flex h-full w-full min-w-0 flex-col items-center justify-center overflow-hidden rounded-[20px] border border-white/10 bg-black/18 px-3 py-4 text-center shadow-inner shadow-black/25">
+      <div className="flex h-full w-full min-w-0 flex-col items-center justify-center overflow-hidden rounded-[18px] border border-white/10 bg-black/18 px-3 py-2 text-center shadow-inner shadow-black/25">
       {presentation.eyebrow && (
         <div className="line-clamp-1 max-w-full text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
           {presentation.eyebrow}
@@ -150,9 +167,9 @@ export const DeckCard = ({
 
         <div
           className={classNames(
-            "mt-2 max-w-full break-words font-semibold leading-none tracking-normal text-white",
+            "max-w-full break-words font-semibold leading-none tracking-normal text-white",
             {},
-            [defaultValueClasses[size]],
+            [presentation.eyebrow ? "mt-2" : "", defaultValueClasses[size]],
           )}
         >
           {presentation.displayValue}
