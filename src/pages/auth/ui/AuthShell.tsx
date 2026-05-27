@@ -26,7 +26,7 @@ export const AuthShell = ({ children, mode }: AuthShellProps) => {
           <span className="min-w-0 truncate">Team estimation screen</span>
         </header>
 
-        <main className="studio-frame mx-auto grid w-full gap-0 lg:min-h-[640px] lg:grid-cols-[minmax(0,1fr)_430px]">
+        <main className="studio-frame auth-shell-frame mx-auto grid w-full gap-0 lg:min-h-[640px]">
           <section className="relative flex min-w-0 flex-col justify-between gap-8 p-5 sm:p-7 lg:p-10">
             <nav className="flex min-w-0 items-center justify-between gap-4">
               <div className="flex min-w-0 items-center gap-3">
@@ -48,7 +48,7 @@ export const AuthShell = ({ children, mode }: AuthShellProps) => {
               </div>
             </nav>
 
-            <div className="grid min-w-0 gap-8 xl:grid-cols-[minmax(0,1fr)_300px] xl:items-end">
+            <div className="auth-hero-layout grid min-w-0 gap-8 2xl:items-end">
               <div className="min-w-0">
                 <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-[var(--color-primary-strong)]">
                   <Radio className="h-4 w-4 shrink-0" />
@@ -57,7 +57,7 @@ export const AuthShell = ({ children, mode }: AuthShellProps) => {
                   </span>
                 </div>
 
-                <h1 className="mt-8 max-w-[680px] text-balance text-4xl font-bold leading-[1.05] tracking-normal text-white sm:text-5xl lg:text-6xl">
+                <h1 className="auth-hero-title mt-8 max-w-[720px] text-balance font-bold tracking-normal text-white">
                   Покер планирования без хаоса в созвоне
                 </h1>
                 <p className="mt-5 max-w-[560px] text-base leading-7 text-[var(--color-text-soft)] sm:text-lg">
@@ -79,7 +79,7 @@ export const AuthShell = ({ children, mode }: AuthShellProps) => {
                 </div>
               </div>
 
-              <div className="studio-card hidden min-w-0 rounded-3xl p-4 xl:block">
+              <div className="studio-card auth-hero-preview hidden min-w-0 rounded-3xl p-4 2xl:block">
                 <div className="flex items-center justify-between gap-3">
                   <div className="min-w-0">
                     <div className="truncate text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
