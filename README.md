@@ -1,73 +1,89 @@
-# React + TypeScript + Vite
+# Planning Poker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Готовый full-stack проект для покер-планирования: React/Vite frontend, FastAPI backend, PostgreSQL, realtime-обновления через WebSocket и demo seed-данные.
 
-Currently, two official plugins are available:
+## Что внутри
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Frontend: React, TypeScript, Vite, React Query, Redux Toolkit, Tailwind CSS.
+- Backend: FastAPI, SQLAlchemy, Alembic, PostgreSQL, JWT auth.
+- Realtime: WebSocket-события для состояния комнаты и голосования.
+- Docker: единый запуск frontend + backend + PostgreSQL.
 
-## React Compiler
+## Быстрый запуск через Docker
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Из корня проекта:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+docker compose up --build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Если Docker установлен без Compose plugin, используйте совместимую команду:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+docker-compose up --build
 ```
+
+После старта:
+
+- Frontend: http://localhost:3000
+- API: http://localhost:8000
+- Swagger: http://localhost:8000/docs
+- Healthcheck: http://localhost:8000/health
+
+Demo seed включён в `planning-poker-backend/.env`. Пароль demo-пользователей: `DemoPass123!`.
+
+## Локальный запуск без Docker
+
+Backend:
+
+```bash
+cd planning-poker-backend/backend
+python -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+```
+
+Для локального backend без Docker поменяйте `DATABASE_URL` на локальную PostgreSQL-строку, например:
+
+```env
+DATABASE_URL=postgresql+psycopg://postgres:postgres@localhost:5432/planning_poker
+```
+
+Затем:
+
+```bash
+.venv\Scripts\alembic upgrade head
+.venv\Scripts\uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+Frontend:
+
+```bash
+npm install
+npm run dev
+```
+
+По умолчанию frontend ждёт API на `http://localhost:8000/api/v1`. Для другого адреса создайте `.env.local`:
+
+```env
+VITE_API_URL=http://localhost:8000/api/v1
+```
+
+## Проверки
+
+```bash
+npm run lint
+npm run build
+```
+
+Backend:
+
+```bash
+cd planning-poker-backend/backend
+.venv\Scripts\python -m compileall -q app alembic
+```
+
+## Production notes
+
+- Перед публичным запуском замените `JWT_SECRET_KEY` в `planning-poker-backend/.env`.
+- Ограничьте `CORS_ORIGINS` реальным доменом frontend.
+- Для HTTPS поставьте reverse proxy перед frontend/backend или настройте TLS на уровне платформы.

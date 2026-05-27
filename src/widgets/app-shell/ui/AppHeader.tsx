@@ -1,24 +1,15 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  LayoutGrid,
-  Menu,
-  MoonStar,
-  Sparkles,
-  SunMedium,
-  UserRound,
-  X,
-} from "lucide-react";
+import { LayoutGrid, LogOut, Menu, Sparkles, UserRound, X } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { CreateRoomButton } from "@/features/create-room";
-import { useTheme } from "@/app/providers/theme/useTheme";
 import { planningPokerApi } from "@/shared/api/planningPokerApi";
 import { LOCAL_STORAGE_KEYS } from "@/shared/constants";
 
 const navItems = [
   { label: "Все комнаты", to: "/rooms" },
-  { label: "Мои комнаты", to: "/rooms/owned" },
+  { label: "Мои", to: "/rooms/owned" },
   { label: "Участвую", to: "/rooms/participating" },
 ];
 
@@ -26,14 +17,13 @@ const linkClassName = ({ isActive }: { isActive: boolean }) =>
   [
     "rounded-full px-4 py-2 text-sm font-medium transition",
     isActive
-      ? "bg-[var(--color-primary-soft)] text-[var(--color-primary-strong)]"
-      : "text-slate-600 hover:bg-white hover:text-slate-950",
+      ? "bg-white text-[#181916]"
+      : "text-[var(--color-text-soft)] hover:bg-white/10 hover:text-white",
   ].join(" ");
 
 export const AppHeader = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { theme, toggleTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { data: user } = useQuery({
@@ -65,26 +55,26 @@ export const AppHeader = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[color:var(--color-surface-elevated)]/88 backdrop-blur-xl">
-      <div className="mx-auto max-w-[1440px] px-5 py-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-[#181916]/82 backdrop-blur-xl">
+      <div className="mx-auto max-w-[1440px] px-4 py-4 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center justify-between gap-4">
           <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-500/20">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-[var(--color-primary)]">
               <LayoutGrid className="h-5 w-5" />
             </div>
 
             <div className="min-w-0">
-              <div className="truncate text-lg font-semibold tracking-tight text-slate-950">
+              <div className="truncate text-base font-bold tracking-normal text-white sm:text-lg">
                 Planning Poker
               </div>
-              <div className="flex items-center gap-2 text-sm text-slate-500">
-                <Sparkles className="h-3.5 w-3.5 text-indigo-500" />
-                Живое пространство для командной оценки
+              <div className="hidden items-center gap-2 text-xs text-[var(--color-text-muted)] sm:flex">
+                <Sparkles className="h-3.5 w-3.5 shrink-0 text-[var(--color-primary)]" />
+                <span className="truncate">Живые комнаты, задачи и оценки</span>
               </div>
             </div>
           </div>
 
-          <nav className="hidden items-center gap-2 md:flex">
+          <nav className="hidden min-w-0 items-center gap-2 md:flex">
             {navItems.map((item) => (
               <NavLink className={linkClassName} key={item.to} to={item.to}>
                 {item.label}
@@ -92,54 +82,42 @@ export const AppHeader = () => {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <div className="hidden items-center gap-2 md:flex">
               <CreateRoomButton
-                label="Новая комната"
+                label="Новая"
                 onCreated={() => void invalidateRooms()}
                 size="compact"
               />
 
               <NavLink
-                className="hidden items-center gap-3 rounded-full border border-[var(--color-border)] bg-white/90 px-2.5 py-1.5 shadow-sm transition hover:border-indigo-200 sm:flex"
+                className="flex max-w-[180px] items-center gap-3 rounded-full border border-white/10 bg-white/8 px-2 py-1.5 transition hover:bg-white/12"
                 to="/profile"
               >
                 <span
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold text-white"
-                  style={{ backgroundColor: user?.avatar_color ?? "#4f46e5" }}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-[#181916]"
+                  style={{ backgroundColor: user?.avatar_color ?? "#d8ff73" }}
                 >
                   {initials || <UserRound className="h-4 w-4" />}
                 </span>
-                <span className="max-w-[10rem] truncate text-sm font-medium text-slate-700">
+                <span className="min-w-0 truncate text-sm font-medium text-white">
                   {user?.name ?? "Профиль"}
                 </span>
               </NavLink>
 
               <button
-                className="rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-500"
+                aria-label="Выйти"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/8 text-[var(--color-text-soft)] transition hover:bg-white/12 hover:text-white"
                 onClick={handleLogout}
                 type="button"
               >
-                Выйти
+                <LogOut className="h-4.5 w-4.5" />
               </button>
             </div>
 
             <button
-              aria-label="Переключить тему"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] bg-white/90 text-slate-600 transition hover:border-indigo-200 hover:text-indigo-700"
-              onClick={toggleTheme}
-              type="button"
-            >
-              {theme === "dark" ? (
-                <SunMedium className="h-4.5 w-4.5" />
-              ) : (
-                <MoonStar className="h-4.5 w-4.5" />
-              )}
-            </button>
-
-            <button
               aria-label={isMobileMenuOpen ? "Закрыть навигацию" : "Открыть навигацию"}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] bg-white/90 text-slate-600 transition hover:border-indigo-200 hover:text-indigo-700 md:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/8 text-white transition hover:bg-white/12 md:hidden"
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               type="button"
             >
@@ -152,23 +130,21 @@ export const AppHeader = () => {
           {isMobileMenuOpen && (
             <motion.div
               animate={{ opacity: 1, y: 0 }}
-              className="mt-4 space-y-4 rounded-[28px] border border-[var(--color-border)] bg-white/90 p-4 shadow-[0_24px_60px_rgba(15,23,42,0.08)] md:hidden"
+              className="studio-card mt-4 space-y-4 rounded-[24px] p-4 md:hidden"
               exit={{ opacity: 0, y: -8 }}
               initial={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.18 }}
             >
-              <div className="flex items-center gap-3 rounded-2xl bg-slate-50 px-3 py-3">
+              <div className="flex min-w-0 items-center gap-3 rounded-2xl bg-black/20 px-3 py-3">
                 <span
-                  className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold text-white"
-                  style={{ backgroundColor: user?.avatar_color ?? "#4f46e5" }}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-[#181916]"
+                  style={{ backgroundColor: user?.avatar_color ?? "#d8ff73" }}
                 >
                   {initials || <UserRound className="h-4 w-4" />}
                 </span>
                 <div className="min-w-0">
-                  <div className="truncate font-medium text-slate-900">
-                    {user?.name ?? "Профиль"}
-                  </div>
-                  <div className="truncate text-sm text-slate-500">
+                  <div className="truncate font-medium text-white">{user?.name ?? "Профиль"}</div>
+                  <div className="truncate text-sm text-[var(--color-text-muted)]">
                     {user?.email ?? "Управление аккаунтом"}
                   </div>
                 </div>
@@ -181,8 +157,8 @@ export const AppHeader = () => {
                       [
                         "rounded-2xl px-4 py-3 text-sm font-medium transition",
                         isActive
-                          ? "bg-[var(--color-primary-soft)] text-[var(--color-primary-strong)]"
-                          : "bg-slate-50 text-slate-700",
+                          ? "bg-white text-[#181916]"
+                          : "bg-white/6 text-[var(--color-text-soft)]",
                       ].join(" ")
                     }
                     key={item.to}
@@ -194,7 +170,7 @@ export const AppHeader = () => {
                 ))}
 
                 <NavLink
-                  className="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700"
+                  className="rounded-2xl bg-white/6 px-4 py-3 text-sm font-medium text-[var(--color-text-soft)]"
                   onClick={() => setIsMobileMenuOpen(false)}
                   to="/profile"
                 >
@@ -210,10 +186,11 @@ export const AppHeader = () => {
                   size="compact"
                 />
                 <button
-                  className="rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm font-medium text-slate-700"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-sm font-medium text-white"
                   onClick={handleLogout}
                   type="button"
                 >
+                  <LogOut className="h-4 w-4" />
                   Выйти
                 </button>
               </div>

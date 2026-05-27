@@ -64,7 +64,7 @@ export const CreateRoomButton = ({
     <>
       <button
         className={classNames(
-          "inline-flex items-center gap-2 rounded-full bg-indigo-600 font-medium text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-500 disabled:opacity-60",
+          "studio-button inline-flex items-center gap-2 rounded-full font-semibold transition disabled:opacity-60",
           {},
           [size === "compact" ? "px-4 py-2.5 text-sm" : "px-5 py-3", className],
         )}
@@ -72,43 +72,43 @@ export const CreateRoomButton = ({
         type="button"
       >
         <Plus className="h-4 w-4" />
-        {label}
+        <span className="truncate">{label}</span>
       </button>
 
       <AnimatePresence>
         {isOpen && (
           <motion.div
             animate={{ opacity: 1 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/30 px-4 py-8 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-8 backdrop-blur-sm"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
             onClick={() => setIsOpen(false)}
           >
             <motion.div
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              className="max-h-[calc(100vh-4rem)] w-full max-w-2xl overflow-y-auto rounded-[30px] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[0_32px_90px_rgba(15,23,42,0.22)]"
+              className="studio-card max-h-[calc(100vh-4rem)] w-full max-w-2xl overflow-y-auto rounded-[28px] p-5 sm:p-6"
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
               initial={{ opacity: 0, scale: 0.96, y: 10 }}
               onClick={(event) => event.stopPropagation()}
               transition={{ duration: 0.18 }}
             >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <div className="text-sm font-medium uppercase tracking-[0.18em] text-indigo-600">
+              <div className="flex min-w-0 items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <div className="text-sm font-medium uppercase tracking-[0.18em] text-[var(--color-primary-strong)]">
                     Новая комната
                   </div>
-                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
+                  <h2 className="mt-2 text-2xl font-semibold tracking-normal text-white">
                     Создайте новую сессию оценки
                   </h2>
-                  <p className="mt-2 max-w-md text-sm leading-6 text-slate-500">
-                    Настройте название, описание и колоду сразу, чтобы комната была готова
-                    к работе без лишних шагов.
+                  <p className="mt-2 max-w-md text-sm leading-6 text-[var(--color-text-soft)]">
+                    Настройте название, описание и колоду. Комната сразу будет
+                    готова к работе и приглашениям.
                   </p>
                 </div>
 
                 <button
                   aria-label="Закрыть создание комнаты"
-                  className="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-sm text-slate-500 transition hover:border-slate-300 hover:text-slate-950"
+                  className="shrink-0 rounded-full border border-white/10 px-3 py-1.5 text-sm text-[var(--color-text-soft)] transition hover:border-white/20 hover:text-white"
                   onClick={() => setIsOpen(false)}
                   type="button"
                 >
@@ -125,9 +125,11 @@ export const CreateRoomButton = ({
               >
                 <div className="grid gap-4">
                   <label className="grid gap-2">
-                    <span className="text-sm font-medium text-slate-700">Название комнаты</span>
+                    <span className="text-sm font-medium text-[var(--color-text-soft)]">
+                      Название комнаты
+                    </span>
                     <input
-                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-indigo-400 focus:bg-white"
+                      className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]"
                       name="name"
                       onChange={(event) =>
                         setForm((prev) => ({ ...prev, name: event.target.value }))
@@ -138,9 +140,11 @@ export const CreateRoomButton = ({
                   </label>
 
                   <label className="grid gap-2">
-                    <span className="text-sm font-medium text-slate-700">Описание</span>
+                    <span className="text-sm font-medium text-[var(--color-text-soft)]">
+                      Описание
+                    </span>
                     <textarea
-                      className="min-h-28 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-indigo-400 focus:bg-white"
+                      className="min-h-28 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]"
                       name="description"
                       onChange={(event) =>
                         setForm((prev) => ({ ...prev, description: event.target.value }))
@@ -152,7 +156,9 @@ export const CreateRoomButton = ({
                 </div>
 
                 <div>
-                  <div className="mb-3 text-sm font-medium text-slate-700">Колода</div>
+                  <div className="mb-3 text-sm font-medium text-[var(--color-text-soft)]">
+                    Колода
+                  </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {availableDecks.map((deck) => {
                       const active = form.deck_preset_code === deck.code;
@@ -162,8 +168,8 @@ export const CreateRoomButton = ({
                           className={[
                             "min-w-0 rounded-3xl border p-4 text-left transition",
                             active
-                              ? "border-indigo-500 bg-indigo-50 text-indigo-900 shadow-sm"
-                              : "border-slate-200 bg-slate-50/80 text-slate-700 hover:border-indigo-200 hover:bg-white",
+                              ? "border-[var(--color-primary)] bg-[var(--color-primary)]/12 text-white shadow-sm"
+                              : "border-white/10 bg-white/5 text-[var(--color-text-soft)] hover:border-white/20 hover:bg-white/8",
                           ].join(" ")}
                           key={deck.id}
                           onClick={() =>
@@ -171,15 +177,15 @@ export const CreateRoomButton = ({
                           }
                           type="button"
                         >
-                          <div className="flex items-center justify-between gap-3">
+                          <div className="flex min-w-0 items-center justify-between gap-3">
                             <div className="min-w-0 break-words font-medium">{deck.name}</div>
                             {active && (
-                              <span className="rounded-full bg-indigo-600 px-2.5 py-1 text-xs font-medium text-white">
+                              <span className="shrink-0 rounded-full bg-[var(--color-primary)] px-2.5 py-1 text-xs font-semibold text-[#181916]">
                                 Выбрано
                               </span>
                             )}
                           </div>
-                          <p className="mt-2 break-words text-sm leading-6 text-slate-500">
+                          <p className="mt-2 line-clamp-3 break-words text-sm leading-6 text-[var(--color-text-muted)]">
                             {deck.description}
                           </p>
                           <div
@@ -200,7 +206,7 @@ export const CreateRoomButton = ({
                                 />
                               ) : (
                                 <span
-                                  className="rounded-xl border border-slate-200 bg-white px-2 py-1 text-xs font-medium text-slate-600"
+                                  className="rounded-xl border border-white/10 bg-black/20 px-2 py-1 text-xs font-medium text-[var(--color-text-soft)]"
                                   key={card}
                                 >
                                   {card}
@@ -214,13 +220,13 @@ export const CreateRoomButton = ({
                   </div>
                 </div>
 
-                <div className="flex flex-col-reverse gap-3 border-t border-[var(--color-border)] pt-5 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="text-sm text-slate-500">
-                    Комната создается сразу с invite-ссылкой и готова к работе.
+                <div className="flex flex-col-reverse gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="text-sm leading-6 text-[var(--color-text-muted)]">
+                    Комната создаётся сразу с invite-ссылкой и готова к работе.
                   </div>
 
                   <button
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-indigo-600 px-5 py-3 font-medium text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="studio-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-semibold transition disabled:cursor-not-allowed disabled:opacity-60"
                     disabled={!form.name.trim() || createRoomMutation.isPending}
                     type="submit"
                   >

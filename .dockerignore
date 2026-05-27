@@ -1,0 +1,15 @@
+node_modules
+dist
+.npm-cache
+.tools
+.env
+.env.*
+!.env.example
+.git
+.gitignore
+*.log
+*.zip
+planning-poker-backend/backend/.venv
+planning-poker-backend/backend/__pycache__
+planning-poker-backend/backend/app/**/__pycache__
+planning-poker-backend/backend/alembic/**/__pycache__

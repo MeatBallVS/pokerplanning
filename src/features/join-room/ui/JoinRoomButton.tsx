@@ -9,7 +9,7 @@ export const JoinRoomButton = ({ roomId }: JoinRoomButtonProps) => {
 
   return (
     <button
-      className="inline-flex items-center justify-center rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-500"
+      className="studio-button inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold transition"
       onClick={() => navigate(`/room/${roomId}`)}
       type="button"
     >

@@ -26,23 +26,23 @@ export const RegisterForm = () => {
 
   return (
     <form
-      className="w-full max-w-md space-y-5 rounded-[32px] border border-slate-200 bg-white/92 p-7 shadow-[0_32px_80px_rgba(15,23,42,0.12)] backdrop-blur"
+      className="studio-card w-full max-w-md space-y-5 rounded-[28px] p-5 sm:p-6"
       onSubmit={handleRegister}
     >
-      <div className="space-y-2 text-center">
-        <div className="text-sm font-medium uppercase tracking-[0.18em] text-indigo-600">
+      <div className="space-y-2">
+        <div className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-primary-strong)]">
           Пространство команды
         </div>
-        <h1 className="text-3xl font-semibold tracking-tight text-slate-950">Регистрация</h1>
-        <p className="mx-auto max-w-xs text-sm leading-6 text-slate-500">
-          Создайте пользователя и сразу переходите к комнатам, задачам и приглашениям
-          команды.
+        <h1 className="text-3xl font-bold tracking-normal text-white">Регистрация</h1>
+        <p className="max-w-sm text-sm leading-6 text-[var(--color-text-soft)]">
+          Создайте пользователя и сразу переходите к комнатам, задачам и
+          приглашениям команды.
         </p>
       </div>
 
       <div className="space-y-3">
         <input
-          className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[15px] shadow-inner shadow-slate-100 outline-none transition focus:border-indigo-400 focus:bg-white"
+          className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-[15px] text-white outline-none transition placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]"
           name="name"
           onChange={handleChange}
           placeholder="Имя"
@@ -50,7 +50,7 @@ export const RegisterForm = () => {
         />
 
         <input
-          className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[15px] shadow-inner shadow-slate-100 outline-none transition focus:border-indigo-400 focus:bg-white"
+          className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-[15px] text-white outline-none transition placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]"
           name="email"
           onChange={handleChange}
           placeholder="Email"
@@ -59,7 +59,7 @@ export const RegisterForm = () => {
         />
 
         <input
-          className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[15px] shadow-inner shadow-slate-100 outline-none transition focus:border-indigo-400 focus:bg-white"
+          className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-[15px] text-white outline-none transition placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]"
           minLength={8}
           name="password"
           onChange={handleChange}
@@ -69,23 +69,27 @@ export const RegisterForm = () => {
         />
       </div>
 
-      {error && <div className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+      {error && (
+        <div className="rounded-2xl border border-red-300/20 bg-red-500/10 px-4 py-3 text-sm leading-6 text-red-100">
+          {error}
+        </div>
+      )}
 
       <button
-        className="w-full rounded-2xl bg-indigo-600 px-4 py-3 font-medium text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-500 disabled:opacity-60"
+        className="studio-button w-full rounded-full px-5 py-3 font-semibold transition disabled:cursor-not-allowed disabled:opacity-60"
         disabled={loading}
         type="submit"
       >
         {loading ? "Создаем..." : "Зарегистрироваться"}
       </button>
 
-      <div className="rounded-2xl bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-500">
-        После регистрации вы сразу попадете в рабочую зону и сможете создать первую
-        комнату.
+      <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs leading-5 text-[var(--color-text-soft)]">
+        После регистрации вы сразу попадёте в рабочую зону и сможете создать
+        первую комнату.
       </div>
 
       <Link
-        className="block text-center text-sm font-medium text-indigo-600 transition hover:text-indigo-500"
+        className="block text-center text-sm font-medium text-[var(--color-primary-strong)] transition hover:text-white"
         to="/login"
       >
         Уже есть аккаунт

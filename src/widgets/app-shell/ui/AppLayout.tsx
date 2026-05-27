@@ -7,7 +7,7 @@ interface AppLayoutProps {
 
 export const AppLayout = ({ children }: AppLayoutProps) => {
   return (
-    <div className="min-h-screen bg-[var(--color-bg)]">
+    <div className="studio-page min-h-screen">
       <AppHeader />
       <main className="mx-auto max-w-[1440px] px-0 pb-12">{children}</main>
     </div>
