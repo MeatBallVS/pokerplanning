@@ -379,6 +379,26 @@ textarea::placeholder {
   color: var(--color-text);
 }
 
+.room-dashboard .vote-results-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding: 1rem 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.room-dashboard .vote-results-stat-card {
+  padding: 1rem;
+}
+
+.room-dashboard .vote-distribution-card {
+  padding: 1.25rem;
+}
+
+.room-dashboard .vote-distribution-chips {
+  margin-top: 1.25rem;
+}
+
 .room-dashboard :where(section, article)[class*="border"] {
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px),

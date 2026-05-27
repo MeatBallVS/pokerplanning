@@ -21,8 +21,8 @@ export const VoteResults = ({ round }: Props) => {
   }
 
   return (
-    <div className="space-y-5 rounded-[24px] bg-slate-50 p-4">
-      <div className="grid gap-4 sm:grid-cols-2">
+    <div className="vote-results-panel space-y-7 rounded-[24px] bg-slate-50 p-4 pb-6">
+      <div className="vote-results-stats grid gap-4 sm:grid-cols-2">
         {[
           {
             label: "Голоса",
@@ -41,7 +41,7 @@ export const VoteResults = ({ round }: Props) => {
             value: round.suggested_result ?? "Скрыт до reveal",
           },
         ].map((item) => (
-          <div className="min-w-0 rounded-2xl bg-white p-4 shadow-sm" key={item.label}>
+          <div className="vote-results-stat-card min-w-0 rounded-2xl bg-white p-4 shadow-sm" key={item.label}>
             <div className="text-sm text-slate-500">{item.label}</div>
             <div className="mt-2 break-words text-lg font-semibold text-slate-950">
               {item.value}
@@ -51,9 +51,9 @@ export const VoteResults = ({ round }: Props) => {
       </div>
 
       {!!Object.keys(round.distribution).length && (
-        <div className="rounded-2xl border border-[var(--color-border)] bg-white p-4">
+        <div className="vote-distribution-card rounded-2xl border border-[var(--color-border)] bg-white p-5">
           <div className="text-sm font-medium text-slate-700">Распределение голосов</div>
-          <div className="mt-4 flex flex-wrap gap-3">
+          <div className="vote-distribution-chips mt-5 flex flex-wrap gap-3">
             {Object.entries(round.distribution).map(([value, count]) => (
               <span
                 className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-700"
